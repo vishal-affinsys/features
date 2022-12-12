@@ -8,7 +8,11 @@ import {
   FlatList,
   Button,
   Platform,
+  SafeAreaView,
 } from 'react-native';
+
+import {PERMISSIONS, RESULTS, request, check} from 'react-native-permissions';
+import {accessPermissioniOS} from '../../helpers/iOSPermissionhandler';
 const QRScan = () => {
   const [QRtext, setQRText] = React.useState([]);
   const requestCameraPermission = async () => {
@@ -26,42 +30,48 @@ const QRScan = () => {
     if (Platform.OS === 'android') {
       requestCameraPermission();
       module.current = NativeModules.Scanner;
-      module.current
-        .getScanner()
-        .then(res => {
-          console.log(res);
-          setQRText(previous => [...previous, res]);
-        })
-        .catch(e => console.log(e));
+    } else {
+      accessPermissioniOS(PERMISSIONS.IOS.CAMERA, () => {});
+      module.current = NativeModules.Scanner;
+      // module.current = NativeModules.RCTCalendarmodule;
+      // module.current.createCalendarEvent('Vishal', 'Ghazipur', res => {
+      //   console.log(res);
+      // });
     }
   }, []);
 
   return (
-    <View style={style.body}>
-      <Text style={style.textStyle}>QR Scanner Screen</Text>
-      <FlatList
-        data={QRtext}
-        renderItem={({item}) => {
-          return (
-            <View>
-              <Text>{item}</Text>
-            </View>
-          );
-        }}
-      />
-      <Button
-        onPress={() => {
-          module.current
-            .getScanner()
-            .then(res => {
-              console.log(res);
-              setQRText(previous => [...previous, res]);
-            })
-            .catch(e => console.log(e));
-        }}
-        title="Scan"
-      />
-    </View>
+    <SafeAreaView style={style.body}>
+      <View style={style.body}>
+        <Text style={style.textStyle}>QR Scanner Screen</Text>
+        <FlatList
+          data={QRtext}
+          renderItem={({item}) => {
+            return (
+              <View>
+                <Text>{item}</Text>
+              </View>
+            );
+          }}
+        />
+        <Button
+          onPress={() => {
+            if (Platform.OS === 'android') {
+              module.current
+                .getScanner()
+                .then(res => {
+                  console.log(res);
+                  setQRText(previous => [...previous, res]);
+                })
+                .catch(e => console.error(e));
+            } else {
+              module.current.getScanner('Vishal', 'location');
+            }
+          }}
+          title="Scan"
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 

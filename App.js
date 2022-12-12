@@ -15,6 +15,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {store} from './Store/store';
+import IosWebview from './Screens/webview_ios';
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +72,11 @@ const App = () => {
           <Stack.Screen
             name="QRScan"
             component={QRScan}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="webview"
+            component={IosWebview}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

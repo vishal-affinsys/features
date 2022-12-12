@@ -47,6 +47,14 @@ const Homescreen = () => {
           title="QR Scanner"
         />
       </View>
+      <View>
+        <Button
+          onPress={() => {
+            navigation.navigate('webview');
+          }}
+          title="webview"
+        />
+      </View>
     </View>
   );
 };

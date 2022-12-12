@@ -14,8 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-splendid-splendidTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-splendid-splendidTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C9E3BACF29472D3D00FFC1C0 /* CustomModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E3BACE29472D3D00FFC1C0 /* CustomModule.swift */; };
-		C9E3BAD129472DA300FFC1C0 /* CustomModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E3BAD029472DA300FFC1C0 /* CustomModule.m */; };
+		C9F39D25294751F7004A1C07 /* Scanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F39D24294751F7004A1C07 /* Scanner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +44,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-splendid.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-splendid.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = splendid/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-splendid-splendidTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-splendid-splendidTests.release.xcconfig"; path = "Target Support Files/Pods-splendid-splendidTests/Pods-splendid-splendidTests.release.xcconfig"; sourceTree = "<group>"; };
-		C99022E429472B1600828AC9 /* splendid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "splendid-Bridging-Header.h"; sourceTree = "<group>"; };
-		C9E3BACE29472D3D00FFC1C0 /* CustomModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModule.swift; sourceTree = "<group>"; };
-		C9E3BAD029472DA300FFC1C0 /* CustomModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomModule.m; sourceTree = "<group>"; };
+		C9F39D2329475190004A1C07 /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
+		C9F39D24294751F7004A1C07 /* Scanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scanner.m; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -97,9 +95,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				C99022E429472B1600828AC9 /* splendid-Bridging-Header.h */,
-				C9E3BACE29472D3D00FFC1C0 /* CustomModule.swift */,
-				C9E3BAD029472DA300FFC1C0 /* CustomModule.m */,
+				C9F39D2329475190004A1C07 /* Scanner.h */,
+				C9F39D24294751F7004A1C07 /* Scanner.m */,
 			);
 			name = splendid;
 			sourceTree = "<group>";
@@ -420,9 +417,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9E3BACF29472D3D00FFC1C0 /* CustomModule.swift in Sources */,
+				C9F39D25294751F7004A1C07 /* Scanner.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				C9E3BAD129472DA300FFC1C0 /* CustomModule.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,7 +438,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-splendid-splendidTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -470,7 +465,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-splendid-splendidTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = splendidTests/Info.plist;

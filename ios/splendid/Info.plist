@@ -11,11 +11,13 @@
 
 
 	<key>NSContactsUsageDescription</key>
-	<string>Splendid wants access your contacts</string>
+	<string>Splendid wants to access your contacts</string>
 	<key>NSFaceIDUsageDescription</key>
-  	<string>Splendid wants access your FaceID</string>
+  	<string>Splendid wants to access your FaceID</string>
 	<key>NSCameraUsageDescription</key>
-    <string>Splendid wants access your camera</string>
+    <string>Splendid wants to access your camera</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+  	<string>Splendid wants to access your location</string>
 
 
 	<key>CFBundleIdentifier</key>
