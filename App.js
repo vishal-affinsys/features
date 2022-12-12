@@ -1,0 +1,82 @@
+import React from 'react';
+import {
+  Homescreen,
+  SMSReader,
+  SMSReaderWeb,
+  BiometricReader,
+  BiometricReaderWeb,
+  ErrorHandler,
+  ContactReader,
+  ContactReaderWeb,
+  QRGen,
+  QRScan,
+} from './Screens';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Provider} from 'react-redux';
+import {store} from './Store/store';
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Homescreen"
+            component={Homescreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SMSReader"
+            component={SMSReader}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="SMSReaderWeb"
+            component={SMSReaderWeb}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="BioemetricReader"
+            component={BiometricReader}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="BioemetricReaderWeb"
+            component={BiometricReaderWeb}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="BiometricError"
+            component={ErrorHandler}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ContactReader"
+            component={ContactReader}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ContactReaderWeb"
+            component={ContactReaderWeb}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="QRGen"
+            component={QRGen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="QRScan"
+            component={QRScan}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+};
+
+export default App;
