@@ -65,7 +65,21 @@ const QRScan = () => {
                 })
                 .catch(e => console.error(e));
             } else {
-              module.current.getScanner('Vishal', 'location');
+              // module.current.getScanner('Vishal', 'location', res => {
+              //   console.log(res);
+              // });
+              module.current.addEvent(res => {
+                console.log(res);
+              });
+              module.current
+                .resolvePromise()
+                .then(res => {
+                  console.log(res);
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+              module.current.naming('Vishal', res => console.log(res));
             }
           }}
           title="Scan"
