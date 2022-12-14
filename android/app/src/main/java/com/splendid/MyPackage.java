@@ -26,7 +26,7 @@ public class MyPackage implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
 
         modules.add(new SMSReader(reactContext));
-        modules.add(new Scanner(reactContext));
+        // modules.add(new Scanner(reactContext));
         return modules;
     }
 

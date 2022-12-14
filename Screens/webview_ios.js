@@ -16,12 +16,10 @@ const IosWebview = () => {
   const webView = useRef(null);
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', HandleBackPressed);
-
-    () => {
-      BackHandler.removeEventListener('hardwareBackPress');
-    };
-  }, []); // INITIALIZE ONLY ONCE
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', HandleBackPressed);
+    }
+  }, []);
 
   const HandleBackPressed = () => {
     if (webView.current.canGoBack) {
@@ -56,8 +54,8 @@ const IosWebview = () => {
     <SafeAreaView style={styles.body}>
       <View style={styles.body}>
         <WebView
+          useWebView2={Platform.OS === 'ios'}
           ref={webView}
-          useWebView2={true}
           onNavigationStateChange={navState => {
             webView.current.canGoBack = navState.canGoBack;
           }}
