@@ -1,19 +1,23 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import {View, Button, StyleSheet, Platform} from 'react-native';
 
 const Homescreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={style.body}>
-      <View>
-        <Button
-          onPress={() => {
-            navigation.navigate('SMSReader');
-          }}
-          title="SMS Reader"
-        />
+      <View style={{display: Platform.OS === 'ios' ? 'none' : null}}>
+        {Platform.OS === 'ios' ? (
+          <View></View>
+        ) : (
+          <Button
+            onPress={() => {
+              navigation.navigate('SMSReader');
+            }}
+            title="SMS Reader"
+          />
+        )}
       </View>
       <View>
         <Button
@@ -39,20 +43,28 @@ const Homescreen = () => {
           title="QR generator"
         />
       </View>
-      <View>
+      {/* <View>
         <Button
           onPress={() => {
             navigation.navigate('QRScan');
           }}
           title="QR Scanner"
         />
-      </View>
+      </View> */}
       <View>
         <Button
           onPress={() => {
             navigation.navigate('webview');
           }}
           title="webview"
+        />
+      </View>
+      <View>
+        <Button
+          onPress={() => {
+            navigation.navigate('OnScreenQRReader');
+          }}
+          title="On Screen QR reader"
         />
       </View>
     </View>

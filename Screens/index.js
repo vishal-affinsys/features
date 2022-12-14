@@ -2,7 +2,7 @@ import Homescreen from './Homescreen';
 import {SMSReader, SMSReaderWeb} from './SMSReader';
 import {BiometricReader, BiometricReaderWeb, ErrorHandler} from './Biometric';
 import {ContactReader, ContactReaderWeb} from './Contact';
-import {QRGen, QRScan} from './QR';
+import {QRGen, QRScan, OnScreenQRReader, ScannerPage} from './QR';
 
 export {
   Homescreen,
@@ -15,4 +15,6 @@ export {
   ContactReaderWeb,
   QRGen,
   QRScan,
+  OnScreenQRReader,
+  ScannerPage,
 };

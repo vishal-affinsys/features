@@ -27,7 +27,8 @@
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "^11.26.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "rn-qr-generator": "^1.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

@@ -10,6 +10,8 @@ import {
   ContactReaderWeb,
   QRGen,
   QRScan,
+  OnScreenQRReader,
+  ScannerPage,
 } from './Screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -77,6 +79,16 @@ const App = () => {
           <Stack.Screen
             name="webview"
             component={IosWebview}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="OnScreenQRReader"
+            component={OnScreenQRReader}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ScannerPage"
+            component={ScannerPage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

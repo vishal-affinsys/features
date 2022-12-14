@@ -1,8 +1,10 @@
 import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';
 
 export const accessPermissioniOS = async (permission, methods) => {
-  check(permission)
-    .then(result => {
+  request(permission).then(result => {
+    console.log(permission, result);
+
+    check(permission).then(result => {
       switch (result) {
         case RESULTS.UNAVAILABLE:
           console.log(
@@ -10,11 +12,6 @@ export const accessPermissioniOS = async (permission, methods) => {
           );
           break;
         case RESULTS.DENIED:
-          request(PERMISSIONS.IOS.CONTACTS).then(result => {
-            console.log('Permission for camera granted');
-            ///TODO: invoke native functions here
-            methods();
-          });
           console.log(
             'The permission has not been requested / is denied but requestable',
           );
@@ -31,8 +28,6 @@ export const accessPermissioniOS = async (permission, methods) => {
           console.log('The permission is denied and not requestable anymore');
           break;
       }
-    })
-    .catch(error => {
-      console.log(error);
     });
+  });
 };

@@ -19,6 +19,9 @@ const IosWebview = () => {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', HandleBackPressed);
     }
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', HandleBackPressed);
+    };
   }, []);
 
   const HandleBackPressed = () => {
@@ -42,9 +45,13 @@ const IosWebview = () => {
         console.log(granted);
         return granted;
       } else {
-        accessPermissioniOS(PERMISSIONS.IOS.CAMERA, () => {});
-        accessPermissioniOS(PERMISSIONS.IOS.LOCATION_ALWAYS, () => {});
-        accessPermissioniOS(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE, () => {});
+        await accessPermissioniOS(PERMISSIONS.IOS.CAMERA, () => {});
+        await accessPermissioniOS(
+          PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+          () => {},
+        );
+        await accessPermissioniOS(PERMISSIONS.IOS.MEDIA_LIBRARY, () => {});
+        await accessPermissioniOS(PERMISSIONS.IOS.PHOTO_LIBRARY, () => {});
       }
     }
     getPermissions();

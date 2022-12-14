@@ -19,6 +19,11 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
   	<string>Splendid wants to access your location</string>
 
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Splendid wants to access your photos and media</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Splendid wants to access your photos and media</string>
+
 
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
