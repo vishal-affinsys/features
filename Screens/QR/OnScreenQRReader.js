@@ -2,17 +2,23 @@ import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
-  View,
-  Button,
   StyleSheet,
   Image,
   Pressable,
+  PermissionsAndroid,
 } from 'react-native';
-
-import QRgenerator from 'rn-qr-generator';
 
 const OnScreenQRReader = () => {
   const navigate = useNavigation();
+  React.useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(e => console.log(e));
+  });
   return (
     <SafeAreaView style={style.body}>
       <Pressable

@@ -2,20 +2,19 @@ import React from 'react';
 import {
   SafeAreaView,
   View,
-  Button,
   StyleSheet,
-  ToastAndroid,
   Image,
   Alert,
   Pressable,
 } from 'react-native';
 
-import QRgenerator from 'rn-qr-generator';
+import RNQRGenerator from 'rn-qr-generator';
+import {Base64Converter} from '../../helpers/Base64Converter';
 
 const ScannerPage = ({route}) => {
   const uri = route.params.uri;
   function alertBox(message) {
-    Alert.alert('QR detected', JSON.stringify(message), [
+    return Alert.alert('QR detected', JSON.stringify(message), [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -26,20 +25,27 @@ const ScannerPage = ({route}) => {
   }
 
   React.useEffect(() => {
-    QRgenerator.detect({
-      uri: uri,
-    })
-      .then(response => {
-        const {values} = response; // Array of detected QR code values. Empty if nothing found.
-        if (values.length === 0) {
-          console.log('No QR detected: ', values);
-        } else {
-          console.log(values);
-          alertBox(values);
-        }
+    console.log(uri);
+    RNQRGenerator.detect({uri: uri})
+      .then(result => {
+        console.log(result.values);
       })
-      .catch(error => console.log('Cannot detect QR code in image', error));
+      .catch(e => console.log(e));
+    // Base64Converter(uri).then(base64 => {
+    //   RNQRGenerator.detect({
+    //     base64: base64,
+    //   })
+    //     .then(results => {
+    //       const {values} = results;
+    //       console.log(results);
+    //       if (!values.length === 0) {
+    //         alertBox(values);
+    //       }
+    //     })
+    //     .catch(er => console.log(er));
+    // });
   });
+
   return (
     <SafeAreaView style={style.body}>
       <View style={style.imageContainer}>

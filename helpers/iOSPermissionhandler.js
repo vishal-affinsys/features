@@ -1,11 +1,11 @@
-import {PERMISSIONS, check, RESULTS, request} from 'react-native-permissions';
+import {check, RESULTS, request} from 'react-native-permissions';
 
 export const accessPermissioniOS = async (permission, methods) => {
   request(permission).then(result => {
     console.log(permission, result);
 
-    check(permission).then(result => {
-      switch (result) {
+    check(permission).then(res => {
+      switch (res) {
         case RESULTS.UNAVAILABLE:
           console.log(
             'This feature is not available (on this device / in this context)',
