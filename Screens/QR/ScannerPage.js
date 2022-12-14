@@ -4,7 +4,9 @@ import {
   View,
   Button,
   StyleSheet,
+  ToastAndroid,
   Image,
+  Alert,
   Pressable,
 } from 'react-native';
 
@@ -12,6 +14,16 @@ import QRgenerator from 'rn-qr-generator';
 
 const ScannerPage = ({route}) => {
   const uri = route.params.uri;
+  function alertBox(message) {
+    Alert.alert('QR detected', JSON.stringify(message), [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    ]);
+  }
 
   React.useEffect(() => {
     QRgenerator.detect({
@@ -19,7 +31,12 @@ const ScannerPage = ({route}) => {
     })
       .then(response => {
         const {values} = response; // Array of detected QR code values. Empty if nothing found.
-        console.log(values);
+        if (values.length === 0) {
+          console.log('No QR detected: ', values);
+        } else {
+          console.log(values);
+          alertBox(values);
+        }
       })
       .catch(error => console.log('Cannot detect QR code in image', error));
   });
