@@ -4,46 +4,38 @@ import {
   View,
   StyleSheet,
   Image,
-  Alert,
   Pressable,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
 
 import RNQRGenerator from 'rn-qr-generator';
-import {Base64Converter} from '../../helpers/Base64Converter';
+import {alertBox, Base64Converter} from '../../helpers/HelperFunctions';
 
 const ScannerPage = ({route}) => {
   const uri = route.params.uri;
-  function alertBox(message) {
-    return Alert.alert('QR detected', JSON.stringify(message), [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+
+  async function getPermission() {
+    const granted = await PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
     ]);
+    console.log(granted);
   }
 
   React.useEffect(() => {
-    console.log(uri);
-    RNQRGenerator.detect({uri: uri})
-      .then(result => {
-        console.log(result.values);
+    if (Platform.OS === 'ios') {
+      RNQRGenerator.detect({
+        uri: uri,
       })
-      .catch(e => console.log(e));
-    // Base64Converter(uri).then(base64 => {
-    //   RNQRGenerator.detect({
-    //     base64: base64,
-    //   })
-    //     .then(results => {
-    //       const {values} = results;
-    //       console.log(results);
-    //       if (!values.length === 0) {
-    //         alertBox(values);
-    //       }
-    //     })
-    //     .catch(er => console.log(er));
-    // });
+        .then(result => {
+          alertBox(result.values);
+        })
+        .catch(e => console.log(e));
+    } else {
+      getPermission();
+      Base64Converter(uri);
+    }
   });
 
   return (

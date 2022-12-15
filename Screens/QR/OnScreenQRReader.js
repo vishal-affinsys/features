@@ -24,12 +24,12 @@ const OnScreenQRReader = () => {
       <Pressable
         onPress={() => {
           navigate.navigate('ScannerPage', {
-            uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/45/qr-code-148732_1280.png',
+            uri: 'https://i.ibb.co/KKRRYff/index.jpg',
           });
         }}>
         <Image
           source={{
-            uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/45/qr-code-148732_1280.png',
+            uri: 'https://i.ibb.co/KKRRYff/index.jpg',
           }}
           style={style.imageStyle}
         />

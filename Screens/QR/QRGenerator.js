@@ -55,10 +55,15 @@ const QRGen = () => {
           <View style={style.buttonContainer}>
             <Pressable
               onPress={() => {
-                setValue(editingText === null ? value : editingText);
-                setEditingText(null);
-                input.current.clear();
-                input.current.blur();
+                if (editingText === null) {
+                  setErrorMessage(true);
+                  return;
+                } else {
+                  setValue(editingText === null ? value : editingText);
+                  setEditingText(null);
+                  input.current.clear();
+                  input.current.blur();
+                }
               }}
               style={style.pressable}
               android_ripple={{color: 'white'}}>
