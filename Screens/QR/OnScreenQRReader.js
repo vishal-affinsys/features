@@ -1,12 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  Pressable,
-  PermissionsAndroid,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Image, Pressable} from 'react-native';
 
 const OnScreenQRReader = () => {
   const navigate = useNavigation();
@@ -15,12 +9,12 @@ const OnScreenQRReader = () => {
       <Pressable
         onPress={() => {
           navigate.navigate('ScannerPage', {
-            uri: 'https://i.ibb.co/KKRRYff/index.jpg',
+            uri: 'https://i.ibb.co/hLwhGDr/index.jpg',
           });
         }}>
         <Image
           source={{
-            uri: 'https://i.ibb.co/KKRRYff/index.jpg',
+            uri: 'https://i.ibb.co/hLwhGDr/index.jpg',
           }}
           style={style.imageStyle}
         />

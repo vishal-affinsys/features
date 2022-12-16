@@ -31,6 +31,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.nfc" android:required="true"/>
+    <uses-permission android:name="amdroid.permission.NFC"/>
+
     <!-- <uses-sdk tools:overrideLibrary="
       androidx.camera.camera2, androidx.camera.core,
       androidx.camera.view, androidx.camera.lifecycle" /> -->

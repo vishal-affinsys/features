@@ -27,14 +27,14 @@ const ScannerPage = ({route}) => {
         })
         .catch(e => console.log(e));
     } else {
-      async function getPermission() {
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        ]);
-        console.log(granted);
-      }
-      getPermission();
+      // async function getPermission() {
+      //   const granted = await PermissionsAndroid.requestMultiple([
+      //     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      //     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      //   ]);
+      //   console.log(granted);
+      // }
+      // getPermission();
       Base64Converter(uri);
     }
   });
