@@ -12,6 +12,7 @@ import {
   QRScan,
   OnScreenQRReader,
   ScannerPage,
+  NFCScreen,
 } from './Screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -89,6 +90,11 @@ const App = () => {
           <Stack.Screen
             name="ScannerPage"
             component={ScannerPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NFCScreen"
+            component={NFCScreen}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

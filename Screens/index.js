@@ -1,20 +1,6 @@
-import Homescreen from './Homescreen';
-import {SMSReader, SMSReaderWeb} from './SMSReader';
-import {BiometricReader, BiometricReaderWeb, ErrorHandler} from './Biometric';
-import {ContactReader, ContactReaderWeb} from './Contact';
-import {QRGen, QRScan, OnScreenQRReader, ScannerPage} from './QR';
-
-export {
-  Homescreen,
-  SMSReader,
-  SMSReaderWeb,
-  BiometricReader,
-  BiometricReaderWeb,
-  ErrorHandler,
-  ContactReader,
-  ContactReaderWeb,
-  QRGen,
-  QRScan,
-  OnScreenQRReader,
-  ScannerPage,
-};
+export {default as Homescreen} from './Homescreen';
+export {SMSReader, SMSReaderWeb} from './SMSReader';
+export {BiometricReader, BiometricReaderWeb, ErrorHandler} from './Biometric';
+export {ContactReader, ContactReaderWeb} from './Contact';
+export {QRGen, QRScan, OnScreenQRReader, ScannerPage} from './QR';
+export {NFCScreen} from './NFC';

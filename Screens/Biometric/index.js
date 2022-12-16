@@ -1,5 +1,3 @@
-import BiometricReader from './BiometricReader';
-import BiometricReaderWeb from './BiometricReaderWeb';
-import ErrorHandler from './ErrorHandler';
-
-export {BiometricReader, BiometricReaderWeb, ErrorHandler};
+export {default as BiometricReader} from './BiometricReader';
+export {default as BiometricReaderWeb} from './BiometricReaderWeb';
+export {default as ErrorHandler} from './ErrorHandler';

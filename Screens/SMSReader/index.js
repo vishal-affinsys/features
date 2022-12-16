@@ -1,4 +1,2 @@
-import SMSReader from './SMSReader';
-import SMSReaderWeb from './SMSReaderWeb';
-
-export {SMSReader, SMSReaderWeb};
+export {default as SMSReader} from './SMSReader';
+export {default as SMSReaderWeb} from './SMSReaderWeb';

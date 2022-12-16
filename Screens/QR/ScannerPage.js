@@ -15,24 +15,25 @@ import {alertBox, Base64Converter} from '../../helpers/HelperFunctions';
 const ScannerPage = ({route}) => {
   const uri = route.params.uri;
 
-  async function getPermission() {
-    const granted = await PermissionsAndroid.requestMultiple([
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    ]);
-    console.log(granted);
-  }
-
   React.useEffect(() => {
     if (Platform.OS === 'ios') {
       RNQRGenerator.detect({
         uri: uri,
       })
         .then(result => {
-          alertBox(result.values);
+          if (result.values.length !== 0) {
+            alertBox(result.values);
+          }
         })
         .catch(e => console.log(e));
     } else {
+      async function getPermission() {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        ]);
+        console.log(granted);
+      }
       getPermission();
       Base64Converter(uri);
     }

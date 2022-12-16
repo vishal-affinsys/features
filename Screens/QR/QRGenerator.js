@@ -75,7 +75,8 @@ const QRGen = () => {
           <View style={style.buttonContainer}>
             <Pressable
               onPress={async () => {
-                if (!baseValue === null) {
+                console.log(baseValue !== null);
+                if (baseValue !== null) {
                   function callback(dataURL) {
                     let link = `data:image/png;base64,${dataURL}`;
                     let shareImageBase64 = {

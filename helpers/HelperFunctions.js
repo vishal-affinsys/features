@@ -25,8 +25,8 @@ export const Base64Converter = async uri => {
   return 'data:image/png;base64,' + data;
 };
 
-export const alertBox = message => {
-  return Alert.alert('QR detected', JSON.stringify(message), [
+export const alertBox = (title, message) => {
+  return Alert.alert(title, JSON.stringify(message), [
     {
       text: 'Cancel',
       onPress: () => console.log('Cancel Pressed'),

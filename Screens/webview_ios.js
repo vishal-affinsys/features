@@ -50,7 +50,6 @@ const IosWebview = () => {
           PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
           () => {},
         );
-        await accessPermissioniOS(PERMISSIONS.IOS.MEDIA_LIBRARY, () => {});
         await accessPermissioniOS(PERMISSIONS.IOS.PHOTO_LIBRARY, () => {});
       }
     }

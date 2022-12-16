@@ -67,6 +67,14 @@ const Homescreen = () => {
           title="On Screen QR reader"
         />
       </View>
+      <View>
+        <Button
+          onPress={() => {
+            navigation.navigate('NFCScreen');
+          }}
+          title="NFC"
+        />
+      </View>
     </View>
   );
 };

@@ -10,15 +10,6 @@ import {
 
 const OnScreenQRReader = () => {
   const navigate = useNavigation();
-  React.useEffect(() => {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-    )
-      .then(res => {
-        console.log(res);
-      })
-      .catch(e => console.log(e));
-  });
   return (
     <SafeAreaView style={style.body}>
       <Pressable
