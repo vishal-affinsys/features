@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   Platform,
+  Linking,
 } from 'react-native';
 
 import RNQRGenerator from 'rn-qr-generator';
@@ -23,11 +24,17 @@ const ScannerPage = ({route}) => {
     console.log(base64, uri);
     if (Platform.OS === 'ios') {
       RNQRGenerator.detect({
+        base64: base64,
         uri: uri,
       })
         .then(result => {
           if (result.values.length !== 0) {
-            alertBox(result.values);
+            alertBox('QR detected', JSON.stringify(result.values[0]));
+            if (result.values[0].includes('upi://pay?', 0)) {
+              Linking.openURL(result.values[0]).catch(e => {
+                console.log(e);
+              });
+            }
           }
         })
         .catch(e => console.log(e));

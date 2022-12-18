@@ -8,6 +8,7 @@ import {
   Text,
   useWindowDimensions,
   SafeAreaView,
+  Linking,
 } from 'react-native';
 import Share from 'react-native-share';
 import {useNavigation} from '@react-navigation/native';
@@ -35,12 +36,6 @@ const QRGen = () => {
     // 'Q7lugo8mfJhDk6wIhANZkbXOWWR2lhJOH2Qs/OQRaRFD2oBuPCGtrMaVFR23t';
     return url;
   }
-
-  React.useEffect(() => {
-    setEditingText(generateUrl(1));
-    // console.log(input.current);
-    // input.current.text = generateUrl();
-  }, []);
 
   return (
     <SafeAreaView style={style.body}>
@@ -92,7 +87,9 @@ const QRGen = () => {
                   setErrorMessage(true);
                   return;
                 } else {
-                  setValue(editingText === null ? value : editingText);
+                  setValue(
+                    editingText === null ? value : generateUrl(editingText),
+                  );
                   setEditingText(null);
                   input.current.clear();
                   input.current.blur();
