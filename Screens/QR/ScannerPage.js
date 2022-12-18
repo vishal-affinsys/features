@@ -5,17 +5,22 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  PermissionsAndroid,
   Platform,
 } from 'react-native';
 
 import RNQRGenerator from 'rn-qr-generator';
-import {alertBox, Base64Converter} from '../../helpers/HelperFunctions';
+import {
+  alertBox,
+  Base64Converter,
+  scanWithBase64,
+} from '../../helpers/HelperFunctions';
 
 const ScannerPage = ({route}) => {
   const uri = route.params.uri;
+  const base64 = route.params.base64;
 
   React.useEffect(() => {
+    console.log(base64, uri);
     if (Platform.OS === 'ios') {
       RNQRGenerator.detect({
         uri: uri,
@@ -27,15 +32,11 @@ const ScannerPage = ({route}) => {
         })
         .catch(e => console.log(e));
     } else {
-      // async function getPermission() {
-      //   const granted = await PermissionsAndroid.requestMultiple([
-      //     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      //     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      //   ]);
-      //   console.log(granted);
-      // }
-      // getPermission();
-      Base64Converter(uri);
+      if (base64 === undefined) {
+        Base64Converter(uri);
+      } else {
+        scanWithBase64(base64);
+      }
     }
   });
 
@@ -43,7 +44,10 @@ const ScannerPage = ({route}) => {
     <SafeAreaView style={style.body}>
       <View style={style.imageContainer}>
         <Pressable onPress={() => {}}>
-          <Image source={{uri: uri}} style={style.imageStyle} />
+          <Image
+            source={{uri: uri === undefined ? null : uri}}
+            style={style.imageStyle}
+          />
         </Pressable>
       </View>
     </SafeAreaView>

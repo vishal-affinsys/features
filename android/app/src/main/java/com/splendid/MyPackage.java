@@ -27,6 +27,8 @@ public class MyPackage implements ReactPackage {
 
         modules.add(new SMSReader(reactContext));
         modules.add(new QRDecoder(reactContext));
+        modules.add(new BTPrinter(reactContext));
+        modules.add(new GooglePay(reactContext));
         // modules.add(new Scanner(reactContext));
         return modules;
     }

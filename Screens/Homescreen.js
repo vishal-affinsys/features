@@ -9,7 +9,7 @@ const Homescreen = () => {
     <View style={style.body}>
       <View style={{display: Platform.OS === 'ios' ? 'none' : null}}>
         {Platform.OS === 'ios' ? (
-          <View></View>
+          <View />
         ) : (
           <Button
             onPress={() => {
@@ -73,6 +73,14 @@ const Homescreen = () => {
             navigation.navigate('NFCScreen');
           }}
           title="NFC"
+        />
+      </View>
+      <View>
+        <Button
+          onPress={() => {
+            navigation.navigate('BTDevices');
+          }}
+          title="BT printer"
         />
       </View>
     </View>

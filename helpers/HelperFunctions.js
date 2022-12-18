@@ -1,4 +1,4 @@
-import {Alert, NativeModules, Platform} from 'react-native';
+import {Alert, Linking, NativeModules, Platform} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 
 export const Base64Converter = async uri => {
@@ -11,12 +11,7 @@ export const Base64Converter = async uri => {
       imagePath =
         Platform.OS === 'android' ? 'file://' + resp.path() : resp.path();
       resp.base64().then(dat => {
-        NativeModules.QRDecoder.ScanImage(dat)
-          .then(val => {
-            alertBox('QR detected', val);
-            console.log(val);
-          })
-          .catch(e => console.log(e));
+        scanWithBase64(dat);
       });
     })
     .then(base64Data => {
@@ -50,3 +45,15 @@ export async function getFileType(response) {
   console.log(ext);
   return ext;
 }
+
+export const scanWithBase64 = base64 => {
+  NativeModules.QRDecoder.ScanImage(base64)
+    .then(val => {
+      // alertBox('QR detected', val);
+      if (`${val}`.includes('upi://pay?', 0)) {
+        // NativeModules.GooglePay.startIntent(val);
+        Linking.openURL(val);
+      }
+    })
+    .catch(e => console.log(e));
+};

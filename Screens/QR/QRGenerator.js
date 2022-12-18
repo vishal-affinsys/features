@@ -10,14 +10,37 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Share from 'react-native-share';
+import {useNavigation} from '@react-navigation/native';
 
 const QRGen = () => {
+  const navigate = useNavigation();
   const [value, setValue] = React.useState(null);
   const [editingText, setEditingText] = React.useState(null);
   const [baseValue, setBaseValue] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState(false);
   const input = React.useRef();
   const {width, height} = useWindowDimensions();
+
+  function generateUrl(amount) {
+    let url =
+      'upi://pay?pa=' + // payment method.
+      '7084324572@axl' + // VPA number.
+      '&am=' +
+      amount + // this param is for fixed amount (non editable).
+      '&pn=Vishal%20Singh' + // to showing your name in app.
+      '&cu=INR' + // Currency code.
+      '&mode=02' + // mode O2 for Secure QR Code.
+      '&orgid=000000'; //If the transaction is initiated by any PSP app then the respective orgID needs to be passed.
+    // '&sign=MEYCIQC8bLDdRbDhpsPAt9wR1a0pcEssDaV' + // Base 64 encoded Digital signature needs to be passed in this tag
+    // 'Q7lugo8mfJhDk6wIhANZkbXOWWR2lhJOH2Qs/OQRaRFD2oBuPCGtrMaVFR23t';
+    return url;
+  }
+
+  React.useEffect(() => {
+    setEditingText(generateUrl(1));
+    // console.log(input.current);
+    // input.current.text = generateUrl();
+  }, []);
 
   return (
     <SafeAreaView style={style.body}>
@@ -29,6 +52,7 @@ const QRGen = () => {
             borderColor: errorMessage ? 'red' : 'grey',
           }}
           placeholder="Enter your amount"
+          keyboardType="decimal-pad"
           placeholderTextColor={style.textInput.color}
           onChangeText={val => {
             setEditingText(val);
@@ -39,16 +63,25 @@ const QRGen = () => {
           {value === null ? (
             <View />
           ) : (
-            <QRCode
-              // ref={qrRef}
-              getRef={c => {
-                setBaseValue(c);
-              }}
-              size={Math.min(width * 0.7, height * 0.3)}
-              value={value}
-              logoSize={50}
-              logoBackgroundColor="black"
-            />
+            <Pressable
+              onPress={() => {
+                baseValue.toDataURL(base => {
+                  navigate.navigate('ScannerPage', {
+                    base64: base,
+                  });
+                });
+              }}>
+              <QRCode
+                // ref={qrRef}
+                getRef={c => {
+                  setBaseValue(c);
+                }}
+                size={Math.min(width * 0.7, height * 0.3)}
+                value={value}
+                logoSize={50}
+                logoBackgroundColor="black"
+              />
+            </Pressable>
           )}
         </View>
         <View style={{...style.outerContainer, marginBottom: height * 0.02}}>

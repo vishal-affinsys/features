@@ -45,7 +45,7 @@ public class SMSReader extends ReactContextBaseJavaModule {
     public void addListener(String eventName) {
        receiver = new BroadcastReceiver() {
            @Override
-           public void onReceive(Context mcontext, Intent intent) {
+           public void onReceive(Context mContext, Intent intent) {
                Log.d("SMS", "Body is called");
                for (SmsMessage smsMessage : Telephony.Sms.Intents.getMessagesFromIntent(intent)) {
                    String messageBody = smsMessage.getMessageBody();
