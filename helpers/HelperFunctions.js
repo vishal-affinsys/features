@@ -53,6 +53,8 @@ export const scanWithBase64 = base64 => {
       if (`${val}`.includes('upi://pay?', 0)) {
         // NativeModules.GooglePay.startIntent(val);
         Linking.openURL(val);
+      } else {
+        alertBox('QR detected', val);
       }
     })
     .catch(e => console.log(e));
