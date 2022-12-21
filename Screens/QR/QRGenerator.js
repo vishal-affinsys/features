@@ -8,7 +8,6 @@ import {
   Text,
   useWindowDimensions,
   SafeAreaView,
-  Linking,
 } from 'react-native';
 import Share from 'react-native-share';
 import {useNavigation} from '@react-navigation/native';
@@ -161,7 +160,6 @@ const style = StyleSheet.create({
     marginHorizontal: 10,
   },
   textStyle: {
-    fontFamily: 'OpenSansHebrew-Regular',
     fontSize: 24,
     fontWeight: 'bold',
   },

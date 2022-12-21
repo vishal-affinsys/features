@@ -43,14 +43,14 @@ const Homescreen = () => {
           title="QR generator"
         />
       </View>
-      {/* <View>
+      <View>
         <Button
           onPress={() => {
             navigation.navigate('QRScan');
           }}
           title="QR Scanner"
         />
-      </View> */}
+      </View>
       <View>
         <Button
           onPress={() => {

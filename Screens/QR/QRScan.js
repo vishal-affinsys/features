@@ -9,10 +9,13 @@ import {
   Button,
   Platform,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 
-import {PERMISSIONS, RESULTS, request, check} from 'react-native-permissions';
+import {PERMISSIONS} from 'react-native-permissions';
 import {accessPermissioniOS} from '../../helpers/iOSPermissionhandler';
+import {Camera, useCameraDevices} from 'react-native-vision-camera';
+
 const QRScan = () => {
   const [QRtext, setQRText] = React.useState([]);
   const requestCameraPermission = async () => {
@@ -25,26 +28,45 @@ const QRScan = () => {
   };
 
   const module = React.useRef();
+  const device = useCameraDevices('wide-angle-camera').back;
 
   React.useEffect(() => {
+    async function managePermission() {
+      const newCameraPermission = await Camera.requestCameraPermission();
+      const newMicrophonePermission =
+        await Camera.requestMicrophonePermission();
+      return [newCameraPermission, newMicrophonePermission];
+    }
+    managePermission();
     if (Platform.OS === 'android') {
       requestCameraPermission();
       module.current = NativeModules.Scanner;
     } else {
       accessPermissioniOS(PERMISSIONS.IOS.CAMERA, () => {});
       module.current = NativeModules.Scanner;
-      // module.current = NativeModules.RCTCalendarmodule;
-      // module.current.createCalendarEvent('Vishal', 'Ghazipur', res => {
-      //   console.log(res);
-      // });
     }
   }, []);
+
+  const refCamera = React.useRef();
 
   return (
     <SafeAreaView style={style.body}>
       <View style={style.body}>
-        <Text style={style.textStyle}>QR Scanner Screen</Text>
-        <FlatList
+        {device === undefined || device === null ? (
+          <ActivityIndicator />
+        ) : (
+          <Camera
+            ref={refCamera}
+            style={{flex: 1}}
+            device={device}
+            isActive={true}
+            frameProcessorFps={'auto'}
+            photo={true}
+            // frameProcessor={frameProcessor}
+          />
+        )}
+
+        {/* <FlatList
           data={QRtext}
           renderItem={({item}) => {
             return (
@@ -53,37 +75,8 @@ const QRScan = () => {
               </View>
             );
           }}
-        />
-        <Button
-          onPress={() => {
-            if (Platform.OS === 'android') {
-              module.current
-                .getScanner()
-                .then(res => {
-                  console.log(res);
-                  setQRText(previous => [...previous, res]);
-                })
-                .catch(e => console.error(e));
-            } else {
-              // module.current.getScanner('Vishal', 'location', res => {
-              //   console.log(res);
-              // });
-              module.current.addEvent(res => {
-                console.log(res);
-              });
-              module.current
-                .resolvePromise()
-                .then(res => {
-                  console.log(res);
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-              module.current.naming('Vishal', res => console.log(res));
-            }
-          }}
-          title="Scan"
-        />
+        /> 
+        <Button onPress={() => {}} title="Scan" />*/}
       </View>
     </SafeAreaView>
   );

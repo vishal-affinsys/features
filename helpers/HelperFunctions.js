@@ -59,3 +59,31 @@ export const scanWithBase64 = base64 => {
     })
     .catch(e => console.log(e));
 };
+
+export const getScanner = setQRText => {
+  if (Platform.OS === 'android') {
+    module.current
+      .getScanner()
+      .then(res => {
+        console.log(res);
+        setQRText(previous => [...previous, res]);
+      })
+      .catch(e => console.error(e));
+  } else {
+    // module.current.getScanner('Vishal', 'location', res => {
+    //   console.log(res);
+    // });
+    module.current.addEvent(res => {
+      console.log(res);
+    });
+    module.current
+      .resolvePromise()
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    module.current.naming('Vishal', res => console.log(res));
+  }
+};
