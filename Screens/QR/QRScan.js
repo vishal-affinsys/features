@@ -1,115 +1,117 @@
 import React from 'react';
 import {
-  View,
   StyleSheet,
   Text,
-  PermissionsAndroid,
-  NativeModules,
-  FlatList,
+  Modal,
+  View,
   Button,
-  Platform,
-  SafeAreaView,
-  ActivityIndicator,
+  useWindowDimensions,
 } from 'react-native';
+import {
+  Camera,
+  useCameraDevices,
+  useFrameProcessor,
+} from 'react-native-vision-camera';
 
-import {PERMISSIONS} from 'react-native-permissions';
-import {accessPermissioniOS} from '../../helpers/iOSPermissionhandler';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import {runOnJS} from 'react-native-reanimated';
+
+import {BarcodeFormat, scanBarcodes} from 'vision-camera-code-scanner';
 
 const QRScan = () => {
-  const [QRtext, setQRText] = React.useState([]);
-  const requestCameraPermission = async () => {
-    const granted = await PermissionsAndroid.requestMultiple([
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-    ]);
+  const [hasPermission, setHasPermission] = React.useState(false);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [barcodes, setBarcodes] = React.useState([]);
+  const devices = useCameraDevices('wide-angle-camera');
+  const device = devices.back;
 
-    console.log(granted);
-  };
+  // const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+  //   checkInverted: true,
+  // });
 
-  const module = React.useRef();
-  const device = useCameraDevices('wide-angle-camera').back;
-
-  React.useEffect(() => {
-    async function managePermission() {
-      const newCameraPermission = await Camera.requestCameraPermission();
-      const newMicrophonePermission =
-        await Camera.requestMicrophonePermission();
-      return [newCameraPermission, newMicrophonePermission];
+  // Alternatively you can use the underlying function:
+  //
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    const detectedBarcodes = scanBarcodes(frame, [BarcodeFormat.QR_CODE], {
+      checkInverted: true,
+    });
+    if (detectedBarcodes.length !== 0) {
+      runOnJS(setModalVisible)(false);
     }
-    managePermission();
-    if (Platform.OS === 'android') {
-      requestCameraPermission();
-      module.current = NativeModules.Scanner;
-    } else {
-      accessPermissioniOS(PERMISSIONS.IOS.CAMERA, () => {});
-      module.current = NativeModules.Scanner;
-    }
+    runOnJS(setBarcodes)(detectedBarcodes);
   }, []);
 
-  const refCamera = React.useRef();
+  const {width, height} = useWindowDimensions();
+
+  React.useEffect(() => {
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
+  }, []);
 
   return (
-    <SafeAreaView style={style.body}>
-      <View style={style.body}>
-        {device === undefined || device === null ? (
-          <ActivityIndicator />
-        ) : (
-          <Camera
-            ref={refCamera}
-            style={{flex: 1}}
-            device={device}
-            isActive={true}
-            frameProcessorFps={'auto'}
-            photo={true}
-            // frameProcessor={frameProcessor}
-          />
-        )}
-
-        {/* <FlatList
-          data={QRtext}
-          renderItem={({item}) => {
-            return (
-              <View>
-                <Text>{item}</Text>
-              </View>
-            );
+    device != null &&
+    hasPermission && (
+      <View>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <>
+            <Camera
+              style={StyleSheet.absoluteFill}
+              device={device}
+              isActive={true}
+              frameProcessor={frameProcessor}
+              frameProcessorFps={'auto'}
+            />
+            <View
+              style={{
+                ...styles.scannerBox,
+                width: Math.min(width * 0.7, height * 0.7),
+                top: height * 0.16,
+              }}
+            />
+          </>
+        </Modal>
+        {barcodes.map((barcode, idx) => (
+          <Text key={idx} style={styles.barcodeTextURL}>
+            {barcode.displayValue}
+          </Text>
+        ))}
+        <Button
+          title="Scan"
+          onPress={() => {
+            setModalVisible(!modalVisible);
           }}
-        /> 
-        <Button onPress={() => {}} title="Scan" />*/}
+        />
       </View>
-    </SafeAreaView>
+    )
   );
 };
 
-const style = StyleSheet.create({
-  body: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  textStyle: {
-    fontSize: 24,
+const styles = StyleSheet.create({
+  barcodeTextURL: {
+    fontSize: 20,
     color: 'black',
     fontWeight: 'bold',
-    textAlign: 'center',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
+  scannerBox: {
+    aspectRatio: 1,
+
+    borderWidth: 1,
+    borderColor: 'white',
+    borderRadius: 20,
+    alignSelf: 'center',
+    borderStyle: 'dashed',
+    position: 'absolute',
   },
-  pressable: {
-    padding: 12,
-  },
-  buttonContainer: {
-    overflow: 'hidden',
-    borderRadius: 12,
-    backgroundColor: '#f38218ff',
-  },
-  outerContainer: {
-    marginHorizontal: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
+  body: {
+    flex: 1,
   },
 });
 
