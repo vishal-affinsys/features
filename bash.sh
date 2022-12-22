@@ -6,11 +6,9 @@ cd android
 cd ../
 
 git add .
-echo "Enter commit name"
-read commit
+read -p "Enter commit name: " commit
+git commit -m "${commit}"
 
-git commit -m $commit
-echo "Enter branch name"
-read branch
-git push origin $branch
+read -p "Enter branch name: " branch
+git push origin "${branch}"
 
