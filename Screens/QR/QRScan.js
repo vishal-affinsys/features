@@ -21,7 +21,7 @@ const QRScan = () => {
   const [hasPermission, setHasPermission] = React.useState(false);
   const [modalVisible, setModalVisible] = React.useState(false);
   const [barcodes, setBarcodes] = React.useState([]);
-  const devices = useCameraDevices('wide-angle-camera');
+  const devices = useCameraDevices();
   const device = devices.back;
 
   // const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
