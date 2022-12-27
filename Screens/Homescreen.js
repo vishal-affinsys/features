@@ -83,6 +83,14 @@ const Homescreen = () => {
           title="BT printer"
         />
       </View>
+      <View>
+        <Button
+          onPress={() => {
+            navigation.navigate('LocalNotifications');
+          }}
+          title="Notifications"
+        />
+      </View>
     </View>
   );
 };

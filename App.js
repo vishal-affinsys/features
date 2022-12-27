@@ -20,10 +20,44 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';
 import {store} from './Store/store';
 import IosWebview from './Screens/webview_ios';
+import LocalNotifications from './Screens/Local_notifications';
+import {Notifications} from 'react-native-notifications';
+import {accessPermissioniOS} from './helpers/iOSPermissionhandler';
+import {PERMISSIONS} from 'react-native-permissions';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  React.useEffect(() => {
+    accessPermissioniOS(PERMISSIONS.IOS.REMINDERS);
+    Notifications.events().registerNotificationReceivedForeground(
+      (notification, completion) => {
+        console.log('Notification Received - Foreground', notification.payload);
+
+        // Calling completion on iOS with `alert: true` will present the native iOS inApp notification.
+        completion({alert: true, sound: true, badge: false});
+      },
+    );
+
+    Notifications.events().registerNotificationOpened(
+      (notification, completion, action) => {
+        console.log('Notification opened by device user', notification.payload);
+        console.log(
+          `Notification opened with an action identifier: ${action.identifier} and response text: ${action.text}`,
+        );
+        completion();
+      },
+    );
+
+    Notifications.events().registerNotificationReceivedBackground(
+      (notification, completion) => {
+        console.log('Notification Received - Background', notification.payload);
+
+        // Calling completion on iOS with `alert: true` will present the native iOS inApp notification.
+        completion({alert: true, sound: true, badge: false});
+      },
+    );
+  });
   return (
     <Provider store={store}>
       <NavigationContainer>
@@ -101,6 +135,11 @@ const App = () => {
           <Stack.Screen
             name="BTDevices"
             component={BTDevices}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="LocalNotifications"
+            component={LocalNotifications}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

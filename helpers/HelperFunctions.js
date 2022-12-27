@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import {Alert, Linking, NativeModules, Platform} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
+import {Notifications} from 'react-native-notifications';
 
 export const Base64Converter = async uri => {
   const fs = RNFetchBlob.fs;
@@ -86,4 +88,12 @@ export const getScanner = setQRText => {
       });
     module.current.naming('Vishal', res => console.log(res));
   }
+};
+
+export const onDisplayNotification = ({title, body, payload}) => {
+  Notifications.postLocalNotification({
+    title: title,
+    body: body,
+    payload: payload,
+  });
 };
