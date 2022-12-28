@@ -6,7 +6,7 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import {onDisplayNotification} from '../helpers/HelperFunctions';
+import {onDisplayNotification, playSound} from '../helpers/HelperFunctions';
 import messaging from '@react-native-firebase/messaging';
 
 const LocalNotifications = () => {
@@ -46,6 +46,14 @@ const LocalNotifications = () => {
           }}>
           <Text style={style.btnText}>Push notification</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          style={style.btnPush}
+          activeOpacity={0.7}
+          onPress={() => {
+            playSound();
+          }}>
+          <Text style={style.btnText}>Trigger sound</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -60,6 +68,7 @@ const style = StyleSheet.create({
     width: 100,
     alignSelf: 'center',
     padding: 12,
+    marginBottom: 12,
     borderRadius: 12,
     backgroundColor: '#124234',
   },

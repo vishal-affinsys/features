@@ -2,6 +2,7 @@
 import {Alert, Linking, NativeModules, Platform} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import {Notifications} from 'react-native-notifications';
+import Sound from 'react-native-sound';
 
 export const Base64Converter = async uri => {
   const fs = RNFetchBlob.fs;
@@ -95,5 +96,69 @@ export const onDisplayNotification = ({title, body, payload}) => {
     title: title,
     body: body,
     payload: payload,
+    sound: 'notification.mp3',
   });
+};
+
+export const playSound = () => {
+  // Enable playback in silence mode
+  Sound.setCategory('Playback');
+
+  // --> Notification.mp3 is placed inside /android/main/src/res/raw folder
+  // --> Remember mp3 file name should be in smallcase tih not tab and spaces.
+  var whoosh = new Sound('notification.mp3', Sound.MAIN_BUNDLE, error => {
+    if (error) {
+      console.log('failed to load the sound', error);
+      return;
+    }
+    // loaded successfully
+    console.log(
+      'duration in seconds: ' +
+        whoosh.getDuration() +
+        'number of channels: ' +
+        whoosh.getNumberOfChannels(),
+    );
+
+    // Play the sound with an onEnd callback
+    whoosh.play(success => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
+  });
+
+  // Reduce the volume by half
+  whoosh.setVolume(0.5);
+
+  // Position the sound to the full right in a stereo field
+  whoosh.setPan(1);
+
+  // Loop indefinitely until stop() is called
+  whoosh.setNumberOfLoops(-1);
+
+  // Get properties of the player instance
+  console.log('volume: ' + whoosh.getVolume());
+  console.log('pan: ' + whoosh.getPan());
+  console.log('loops: ' + whoosh.getNumberOfLoops());
+
+  // Seek to a specific point in seconds
+  whoosh.setCurrentTime(2.5);
+
+  // Get the current playback point in seconds
+  whoosh.getCurrentTime(seconds => console.log('at ' + seconds));
+
+  // Pause the sound
+  whoosh.pause();
+
+  // Stop the sound and rewind to the beginning
+  whoosh.stop(() => {
+    // Note: If you want to play a sound after stopping and rewinding it,
+    // it is important to call play() in a callback.
+    whoosh.play();
+  });
+
+  // Release the audio player resource
+  whoosh.release();
 };
