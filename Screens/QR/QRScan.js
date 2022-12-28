@@ -46,6 +46,7 @@ const QRScan = () => {
   React.useEffect(() => {
     (async () => {
       const status = await Camera.requestCameraPermission();
+      console.log(status);
       setHasPermission(status === 'authorized');
     })();
   }, []);

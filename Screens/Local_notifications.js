@@ -6,8 +6,9 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
-import {onDisplayNotification, playSound} from '../helpers/HelperFunctions';
+import {onDisplayNotification} from '../helpers/HelperFunctions';
 import messaging from '@react-native-firebase/messaging';
+import SoundModule from '../helpers/SoundModule';
 
 const LocalNotifications = () => {
   React.useEffect(() => {
@@ -50,7 +51,8 @@ const LocalNotifications = () => {
           style={style.btnPush}
           activeOpacity={0.7}
           onPress={() => {
-            playSound();
+            const sound = new SoundModule('notification.mp3');
+            sound.playSound();
           }}>
           <Text style={style.btnText}>Trigger sound</Text>
         </TouchableOpacity>
