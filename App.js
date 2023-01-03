@@ -34,7 +34,7 @@ const App = () => {
       (notification, completion) => {
         console.log('Notification Received - Foreground', notification.payload);
 
-        // Calling completion on iOS with `alert: true` will present the native iOS inApp notification.
+        // Calling completion on iOS with `alert: true` will present the native iOS inApp.
         completion({alert: true, sound: true, badge: false});
       },
     );
