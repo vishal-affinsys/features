@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Button, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import CustomButton from '../Components/CustomButton';
 
 const Homescreen = () => {
@@ -8,7 +8,7 @@ const Homescreen = () => {
 
   return (
     <View style={style.body}>
-      <View style={{display: Platform.OS === 'ios' ? 'none' : null}}>
+      <View style={style.displayReader}>
         {Platform.OS === 'ios' ? (
           <View />
         ) : (
@@ -113,11 +113,21 @@ const Homescreen = () => {
           navigation.navigate('LocalNotifications');
         }}
       />
+      <CustomButton
+        title={'Face detection'}
+        rippleColor={'white'}
+        btnStyle={style.btnStyle}
+        btnText={style.btnText}
+        onPress={() => {
+          navigation.navigate('FaceDetection');
+        }}
+      />
     </View>
   );
 };
 
 const style = StyleSheet.create({
+  displayReader: {display: Platform.OS === 'ios' ? 'none' : null},
   body: {
     flex: 1,
     justifyContent: 'space-evenly',

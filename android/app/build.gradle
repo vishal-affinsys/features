@@ -265,6 +265,10 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0@aar'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
 
+    // GIF
+    implementation 'com.facebook.fresco:fresco:1.10.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0' 
+
 
 
 
